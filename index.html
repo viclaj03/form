@@ -9,6 +9,7 @@
     <link href="./css/main.css" rel="stylesheet">
     <meta name="description" content="Ejercicio de Javascript">
     <meta name="author" content="Juan Segura">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="keywords" content="JavaScript, Ejercicio, HTML5, DOM">
 </head>
 
@@ -46,14 +47,25 @@
                 </table>
             </div>
         </div>
-
+        <br>
+        <div class="form-group">
+                <button type="button" class="btn btn-default btn-primary"  id="show-form">Añadir Producto</button>
+        </div>
+        <div class="form-group ">
+            <button type="button" class="btn btn-default btn-primary hide"  id="show-table">ver tabla</button>
+        </div>
+        <br>
         <!-- Acciones sobre el almacén -->
-        <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-4">
-                <form id="new-prod">
+        <div class="row ">
+            <div class="col-sm-6 col-md-4 col-lg-4 ">
+                <form id="new-prod" class="hide">
                     <fieldset>
-                        <legend>Nuevo producto</legend>
+                        <legend id="legend-prod">Nuevo producto</legend>
                         <!-- Aquí los inputs y botones del form -->
+                        <div class="form-group hide">
+                            <label for="newprod-id">id:</label>
+                            <input type="text" class="form-control" id="newprod-id">
+                        </div>
                         <div class="form-group">
                             <label for="newprod-name">Nombre:</label>
                             <input type="text" class="form-control" id="newprod-name" required>
@@ -62,46 +74,15 @@
                             <label for="newprod-price">Precio/u.:</label>
                             <input type="number" class="form-control" id="newprod-price" required min="0" step="0.01">
                         </div>
+                        <div class="form-group">
+                            <label for="newprod-name">Unidades:</label>
+                            <input type="number" class="form-control" id="newprod-units" required min="0">
+                        </div>
                         <button type="submit" class="btn btn-default btn-primary">Añadir</button>
                         <button type="reset" class="btn btn-danger">Reset</button>
                     </fieldset>
                 </form>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-4">
-                <form id="del-prod">
-                    <fieldset>
-                        <legend>Eliminar producto</legend>
-                        <!-- Aquí los inputs y botones del form -->
-                        <div class="form-group">
-                            <label for="delprod-id">Id:</label>
-                            <input type="text" class="form-control" id="delprod-id" required>
-                        </div>
-                        <button type="submit" class="btn btn-default btn-primary">Eliminar</button>
-                        <button type="reset" class="btn btn-danger">Reset</button>
-                    </fieldset>
-                </form>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-4">
-                <form id="stock-prod">
-                    <fieldset>
-                        <legend>Cambiar stock</legend>
-                        <!-- Aquí los inputs y botones del form -->
-                        <div class="form-group">
-                            <label for="stockprod-id">Id del producto:</label>
-                            <input type="text" class="form-control" id="stockprod-id" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="stockprod-units">Unidades a incrementar</label>
-                            <input type="number" class="form-control" id="stockprod-units" required step="1">
-                            <small>(si el valor es negativo se decrementa)</small>
-                        </div>
-                        <button type="submit" class="btn btn-default btn-primary">Cambiar</button>
-                        <button type="reset" class="btn btn-danger">Reset</button>
-                    </fieldset>
-                </form>
-            </div>
-        </div>
-
+            </div> 
         <!-- Listados del almacén -->
         <div class="row">
             <div class="col-sm-6 col-md-6 col-lg-6">

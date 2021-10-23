@@ -15,10 +15,17 @@ window.addEventListener('load', () => {
     // Aquí el código para obtener los datos del formulario
     const name = document.getElementById('newprod-name').value
     const price = document.getElementById('newprod-price').value
-
+    const units = Number(document.getElementById('newprod-units').value)
     // Aquí llamamos a la función del controlador que añade productos (addProductToStore)
     // pasándole como parámetro esos datos
-    myController.addProductToStore({ name, price })   
+    if(document.getElementById('newprod-id').value){
+      alert(document.getElementById('newprod-id').value)
+      alert("atrapado")
+    } else{
+      alert('no atrapado')
+    }
+    myController.addProductToStore({ name, price,units })
+    myController.hideForm()
     // Sintaxis de ES2015 que equivale a 
     //
     // myController.addProductToStore(
@@ -29,19 +36,17 @@ window.addEventListener('load', () => {
     // ) 
   })
 
-  document.getElementById('del-prod').addEventListener('submit', (event) => {
+
+  document.getElementById('show-form').addEventListener('click', (event)=>{
     event.preventDefault()
 
-    myController.deleteProductFromStore(document.getElementById('delprod-id').value)
+    myController.showForm()
   })
 
-  document.getElementById('stock-prod').addEventListener('submit', (event) => {
+  document.getElementById('show-table').addEventListener('click', (event)=>{
     event.preventDefault()
 
-    myController.changeProductStock({
-      id: document.getElementById('stockprod-id').value, 
-      units: document.getElementById('stockprod-units').value
-    })
+    myController.hideForm()
   })
 
 })

@@ -16,7 +16,36 @@ class Controller {
             return
         }
         this.view.renderNewProduct(product)
+        document.getElementById('prod-' + product.id).querySelector('.btn-delete').addEventListener("click", ()=>{
+            this.deleteProductFromStore(product.id)
+        })
+        document.getElementById('prod-' + product.id).querySelector('.btn-up').addEventListener("click", ()=>{
+            var units = 1;
+            var id = product.id;
+            this.changeProductStock({id,units})
+        })
+        document.getElementById('prod-' + product.id).querySelector('.btn-down').addEventListener("click", ()=>{
+            var units = -1;
+            var id = product.id;
+            this.changeProductStock({id,units})
+        })
+        document.getElementById('prod-' + product.id).querySelector('.btn-edit').addEventListener("click", ()=>{
+            var units = -1;
+            var id = product.id;
+            
+            this.view.showForm()
+        })
         this.view.renderStoreImport(this.store.totalImport())
+    }
+
+    showForm(){
+        this.view.clearForm()
+        this.view.showForm()
+
+    }
+
+    hideForm(){
+        this.view.hideForm()
     }
 
     deleteProductFromStore(prodId) {
@@ -80,5 +109,7 @@ class Controller {
         this.view.renderStoreImport(this.store.totalImport())
     }
 }
+
+    
 
 module.exports = Controller
