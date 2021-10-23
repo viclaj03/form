@@ -74,13 +74,15 @@ class View{
     }
 
     clearForm(){
+        document.getElementById('newprod-id').value = ""
         document.getElementById('newprod-name').value = "";
         document.getElementById('newprod-price').value = "";
         document.getElementById('newprod-units').value = "";
         document.getElementById('legend-prod').innerHTML= 'Nuevo producto';
     }
 
-    showData(producte){
+    showData(product){
+        document.getElementById('newprod-id').value = product.id
         document.getElementById('newprod-name').value = product.name;
             document.getElementById('newprod-price').value = product.price;
             document.getElementById('newprod-units').value = product.units;

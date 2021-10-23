@@ -32,7 +32,7 @@ class Controller {
         document.getElementById('prod-' + product.id).querySelector('.btn-edit').addEventListener("click", ()=>{
             var units = -1;
             var id = product.id;
-            
+            this.view.showData(product)
             this.view.showForm()
         })
         this.view.renderStoreImport(this.store.totalImport())
