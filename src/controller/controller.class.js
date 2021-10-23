@@ -29,19 +29,18 @@ class Controller {
             var id = product.id;
             this.changeProductStock({id,units})
         })
-        document.getElementById('prod-' + product.id).querySelector('.btn-edit').addEventListener("click", ()=>{
-            var units = -1;
-            var id = product.id;
+        document.getElementById('prod-' + product.id).querySelector('.btn-edit').addEventListener("click", ()=> {
+            
             this.view.showData(product)
             this.view.showForm()
         })
+        
         this.view.renderStoreImport(this.store.totalImport())
     }
 
     showForm(){
         this.view.clearForm()
         this.view.showForm()
-
     }
 
     hideForm(){

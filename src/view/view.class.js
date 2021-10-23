@@ -79,6 +79,7 @@ class View{
         document.getElementById('newprod-price').value = "";
         document.getElementById('newprod-units').value = "";
         document.getElementById('legend-prod').innerHTML= 'Nuevo producto';
+        document.getElementById('boton').innerHTML="Añadir"
     }
 
     showData(product){
@@ -87,6 +88,7 @@ class View{
             document.getElementById('newprod-price').value = product.price;
             document.getElementById('newprod-units').value = product.units;
             document.getElementById('legend-prod').innerHTML= 'producto id:' + product.id;
+            document.getElementById('boton').innerHTML="Actulizar"
     }
     
 }

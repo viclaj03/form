@@ -19,12 +19,13 @@ window.addEventListener('load', () => {
     // Aquí llamamos a la función del controlador que añade productos (addProductToStore)
     // pasándole como parámetro esos datos
     if(document.getElementById('newprod-id').value){
-      alert(document.getElementById('newprod-id').value)
+      const id = Number(document.getElementById('newprod-id').value)
+      myController.changeProductInStore({id,name, price,units })
       alert("atrapado")
-    } else{
-      alert('no atrapado')
+    } else {
+      myController.addProductToStore({name, price,units })
+      alert("Subido")
     }
-    myController.addProductToStore({ name, price,units })
     myController.hideForm()
     // Sintaxis de ES2015 que equivale a 
     //
