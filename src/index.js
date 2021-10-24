@@ -21,10 +21,8 @@ window.addEventListener('load', () => {
     if(document.getElementById('newprod-id').value){
       const id = Number(document.getElementById('newprod-id').value)
       myController.changeProductInStore({id,name, price,units })
-      alert("atrapado")
     } else {
       myController.addProductToStore({name, price,units })
-      alert("Subido")
     }
     myController.hideForm()
     // Sintaxis de ES2015 que equivale a 
