@@ -35,10 +35,22 @@ window.addEventListener('load', () => {
     // ) 
   })
 
+    // función manejadora del formulario 'new-prod'
+    document.getElementById('new-prod').addEventListener('reset', (event) => {
+      event.preventDefault()
+      if(document.getElementById('newprod-id').value){
+        const id = Number(document.getElementById('newprod-id').value)
+        myController.showData(id)
+      } else {
+        myController.showForm()
+
+      }
+
+    })
+
 
   document.getElementById('show-form').addEventListener('click', (event)=>{
     event.preventDefault()
-
     myController.showForm()
   })
 

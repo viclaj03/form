@@ -15,10 +15,15 @@
 
 <body>
     <div class="container">
+        <nav>
+            <ul  aria-labelledby="navbarDropdown">
+                <li><a href="#" id="show-table" >Ver tabla</a></li>
+                <li><a href="#" id="show-form">nuevo producto</a></li>
+            </ul>
+        </nav>
         <header>
             <h1>Almacén central de productos - ACME SL</h1>
         </header>
-
         <!-- Zona para mostrar mensajes al usuario -->
         <div class="row" id="messages"></div>
 
@@ -48,9 +53,6 @@
             </div>
         </div>
         <br>
-        <div class="form-group">
-                <button type="button" class="btn btn-default btn-primary"  id="show-form">Añadir Producto</button>
-        </div>
         <br>
         <!-- Acciones sobre el almacén -->
         <div class="row ">
@@ -112,7 +114,7 @@
                             <input type="text" class="form-control" id="low-uds" required>
                         </div>
                         <button type="submit" class="btn btn-default btn-primary">Mostrar</button>
-                        <button type="reset" class="btn btn-danger">Reset</button>
+                        <button type="reset" class="btn btn-danger" id="reset" >Reset</button>
                     </fieldset>
                 </form>
             </div>
@@ -125,8 +127,7 @@
 
         </div>
         <footer><small>Diseño Web en Entorno Cliente - Juan Segura</small></footer>
-
+    </div>
         <script src="./dist/main.js"></script>
 </body>
-
 </html>

@@ -31,8 +31,8 @@ class Controller {
         })
         document.getElementById('prod-' + product.id).querySelector('.btn-edit').addEventListener("click", ()=> {
             
-            this.view.showData(product)
-            this.view.showForm()
+            var id = product.id;
+            this.showData(id)
         })
         
         this.view.renderStoreImport(this.store.totalImport())
@@ -42,6 +42,13 @@ class Controller {
         this.view.clearForm()
         this.view.showForm()
     }
+
+    showData(id){
+        var product = this.store.findProduct(id)
+        this.view.showData(product)
+        this.view.showForm()
+    }
+    
 
     hideForm(){
         this.view.hideForm()

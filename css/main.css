@@ -7,4 +7,10 @@ form {
 	display: none;
 }
 
+nav ul li{
+	display: inline;
+	padding: 25px;
+
+}
+
 

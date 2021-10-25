@@ -54,21 +54,13 @@ class View{
     showForm(){
         const formulario = document.getElementById('new-prod')
         const alamcen = document.getElementById('almacen')
-        const botonForm = document.getElementById('show-form')
-        const botonTable = document.getElementById('show-table')
-        botonForm.classList.add('hide')
-        botonTable.classList.remove('hide')
         formulario.classList.remove('hide')
         alamcen.classList.add('hide')
     }
 
     hideForm(){
         const formulario = document.getElementById('new-prod')
-        const alamcen = document.getElementById('almacen')
-        const botonForm = document.getElementById('show-form')
-        const botonTable = document.getElementById('show-table')
-        botonForm.classList.remove('hide')
-        botonTable.classList.add('hide')
+        const alamcen = document.getElementById('almacen')    
         formulario.classList.add('hide')
         alamcen.classList.remove('hide')
     }
