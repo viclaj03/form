@@ -1,4 +1,5 @@
 const Product = require('./product.class')
+const Api = require("./api")
 
 class Store {
     constructor (id) {
@@ -6,11 +7,30 @@ class Store {
     	this.products = []
     }
 
+    async loadData() {
+        var productos = []
+        try{
+            var  productos = await Api.pideDatos() 
+        }catch(error){
+            throw error
+        }
+        productos.forEach(nuevoproducto =>  {
+            const newProd = new Product(
+                nuevoproducto.id, 
+                nuevoproducto.name, 
+                nuevoproducto.price, 
+                nuevoproducto.units
+            )
+            this.products.push(newProd)
+        });
+
+    }
+
     findProduct(id) {
         return this.products.find((prod) => prod.id === id)
     }
 
-    addProduct(datosProd) {
+    async addProduct(datosProd) {
         // Comprobamos que los datos sean correctos
         if (!datosProd.name) {
             throw `Debes indicar el nombre del producto`
@@ -25,20 +45,29 @@ class Store {
             throw `Las unidades deben ser un nº entero positivo (${datosProd.units})`
         }
 
-        datosProd.id = this.lastId() + 1
+        //datosProd.id = this.lastId() + 1
         datosProd.price = Number(datosProd.price)
+
         if (datosProd.units) datosProd.units = Number(datosProd.units)
+
+        try{
+            var nuevoproducto =  await Api.addDatos(datosProd)
+        }catch(err){
+            throw err;
+        }
+
         const newProd = new Product(
-            datosProd.id, 
-            datosProd.name, 
-            datosProd.price, 
-            datosProd.units
+            nuevoproducto.id, 
+            nuevoproducto.name, 
+            nuevoproducto.price, 
+            nuevoproducto.units
         )
+        
         this.products.push(newProd)
         return newProd
     }
 
-    delProduct(id) {
+    async delProduct(id) {
         const prod = this.findProduct(Number(id))
         if (!prod) {
             throw `No existe el producto con id ${id}`
@@ -46,11 +75,12 @@ class Store {
         if (prod.units) {
             throw `Al producto con id ${id} aún le quedan ${prod.units} unidades`
         }
+        let prueba = await Api.deleteDatos(id)
         this.products = this.products.filter((item) => item.id !== Number(id))
         return prod
     }
 
-    changeProductUnits(datosProd) {
+    async changeProductUnits(datosProd) {
         // Comprobamos que los datos sean correctos
         if (!datosProd.id) {
             throw `Debes indicar la id del producto`
@@ -67,16 +97,18 @@ class Store {
             throw `No existe el producto con id "${datosProd.id}"`
         }
 
+        
         try {
             var prodChanged = prod.changeUnits(Number(datosProd.units))
         } catch(err) {
             throw err
         }
+        let prueba = await Api.updateDatos(prodChanged)
 
         return prodChanged
     }
 
-    changeProduct(datosProd) {
+    async changeProduct(datosProd) {
         // Comprobamos que los datos sean correctos
         if (!datosProd.id) {
             throw `Debes indicar la id del producto`
@@ -97,6 +129,7 @@ class Store {
         if (datosProd.price != undefined) prod.price = Number(datosProd.price)
         if (datosProd.units != undefined) prod.units = Number(datosProd.units)
 
+        let prueba = await Api.updateDatos(prod)
         return prod
     }
 
@@ -123,7 +156,7 @@ class Store {
     }
 
     lastId() {
-        return this.products.reduce((max, prod) => prod.id > max ? prod.id : max, 0)
+        return  this.products.reduce((max, prod) => prod.id > max ? prod.id : max, 0)
     }
 }
 

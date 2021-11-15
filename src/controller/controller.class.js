@@ -7,14 +7,36 @@ class Controller {
         this.view = new View()
     }
 
-    addProductToStore(formData) {
+    async dowloadDatos(){
+        try{
+             await this.store.loadData()
+        }catch(err){
+            this.view.renderErrorMessage(err)
+            return 
+        }
+        this.store.products.forEach(elemento => {
+            this.renderProduct(elemento)
+        })
+        
+        this.view.renderStoreImport(this.store.totalImport())
+
+    }
+
+
+   async addProductToStore(formData) {
         let product = {}
         try {
-            product = this.store.addProduct(formData)
+            product = await this.store.addProduct(formData)
         } catch (err) {
             this.view.renderErrorMessage(err)
             return
         }
+        this.renderProduct(product);
+        
+        this.view.renderStoreImport(this.store.totalImport())
+    }
+
+    renderProduct(product){
         this.view.renderNewProduct(product)
         document.getElementById('prod-' + product.id).querySelector('.btn-delete').addEventListener("click", ()=>{
             this.deleteProductFromStore(product.id)
@@ -34,8 +56,6 @@ class Controller {
             var id = product.id;
             this.showData(id)
         })
-        
-        this.view.renderStoreImport(this.store.totalImport())
     }
 
     showForm(){
@@ -54,7 +74,7 @@ class Controller {
         this.view.hideForm()
     }
 
-    deleteProductFromStore(prodId) {
+    async deleteProductFromStore(prodId) {
         // Debemos obtener el producto para pedir confirmación
         const product = this.store.findProduct(Number(prodId))
         if (!product) {
@@ -80,7 +100,7 @@ class Controller {
                 }
             }
             try {
-                var prodDeleted = this.store.delProduct(prodId)
+                var  prodDeleted = await this.store.delProduct(prodId)
             } catch(err) {
                 this.view.renderErrorMessage(err)
                 return
@@ -90,9 +110,9 @@ class Controller {
         }
     }
 
-    changeProductInStore(formData) {
+    async changeProductInStore(formData) {
         try {
-            var prodModified = this.store.changeProduct(formData)
+            var prodModified = await this.store.changeProduct(formData)
         } catch (err) {
             this.view.renderErrorMessage(err)
             return
@@ -101,9 +121,9 @@ class Controller {
         this.view.renderStoreImport(this.store.totalImport())
     }
 
-    changeProductStock(formData) {
+    async changeProductStock(formData) {
         try {
-            var prodModified = this.store.changeProductUnits({
+            var prodModified = await this.store.changeProductUnits({
                 id: formData.id,
                 units: formData.units
             })

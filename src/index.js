@@ -8,6 +8,8 @@ const myController = new Controller()
 // A continuación crearemos una función manejadora para cada formulario
 window.addEventListener('load', () => {
 
+  myController.dowloadDatos()
+
   // función manejadora del formulario 'new-prod'
   document.getElementById('new-prod').addEventListener('submit', (event) => {
     event.preventDefault()
