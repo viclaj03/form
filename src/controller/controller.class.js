@@ -7,19 +7,74 @@ class Controller {
         this.view = new View()
     }
 
-    addProductToStore(formData) {
+    async dowloadDatos(){
+        try{
+             await this.store.loadData()
+        }catch(err){
+            this.view.renderErrorMessage(err)
+            return 
+        }
+        this.store.products.forEach(elemento => {
+            this.renderProduct(elemento)
+        })
+        
+        this.view.renderStoreImport(this.store.totalImport())
+
+    }
+
+
+   async addProductToStore(formData) {
         let product = {}
         try {
-            product = this.store.addProduct(formData)
+            product = await this.store.addProduct(formData)
         } catch (err) {
             this.view.renderErrorMessage(err)
             return
         }
-        this.view.renderNewProduct(product)
+        this.renderProduct(product);
+        
         this.view.renderStoreImport(this.store.totalImport())
     }
 
-    deleteProductFromStore(prodId) {
+    renderProduct(product){
+        this.view.renderNewProduct(product)
+        document.getElementById('prod-' + product.id).querySelector('.btn-delete').addEventListener("click", ()=>{
+            this.deleteProductFromStore(product.id)
+        })
+        document.getElementById('prod-' + product.id).querySelector('.btn-up').addEventListener("click", ()=>{
+            var units = 1;
+            var id = product.id;
+            this.changeProductStock({id,units})
+        })
+        document.getElementById('prod-' + product.id).querySelector('.btn-down').addEventListener("click", ()=>{
+            var units = -1;
+            var id = product.id;
+            this.changeProductStock({id,units})
+        })
+        document.getElementById('prod-' + product.id).querySelector('.btn-edit').addEventListener("click", ()=> {
+            
+            var id = product.id;
+            this.showData(id)
+        })
+    }
+
+    showForm(){
+        this.view.clearForm()
+        this.view.showForm()
+    }
+
+    showData(id){
+        var product = this.store.findProduct(id)
+        this.view.showData(product)
+        this.view.showForm()
+    }
+    
+
+    hideForm(){
+        this.view.hideForm()
+    }
+
+    async deleteProductFromStore(prodId) {
         // Debemos obtener el producto para pedir confirmación
         const product = this.store.findProduct(Number(prodId))
         if (!product) {
@@ -45,7 +100,7 @@ class Controller {
                 }
             }
             try {
-                var prodDeleted = this.store.delProduct(prodId)
+                var  prodDeleted = await this.store.delProduct(prodId)
             } catch(err) {
                 this.view.renderErrorMessage(err)
                 return
@@ -55,9 +110,9 @@ class Controller {
         }
     }
 
-    changeProductInStore(formData) {
+    async changeProductInStore(formData) {
         try {
-            var prodModified = this.store.changeProduct(formData)
+            var prodModified = await this.store.changeProduct(formData)
         } catch (err) {
             this.view.renderErrorMessage(err)
             return
@@ -66,9 +121,9 @@ class Controller {
         this.view.renderStoreImport(this.store.totalImport())
     }
 
-    changeProductStock(formData) {
+    async changeProductStock(formData) {
         try {
-            var prodModified = this.store.changeProductUnits({
+            var prodModified = await this.store.changeProductUnits({
                 id: formData.id,
                 units: formData.units
             })
@@ -80,5 +135,7 @@ class Controller {
         this.view.renderStoreImport(this.store.totalImport())
     }
 }
+
+    
 
 module.exports = Controller
